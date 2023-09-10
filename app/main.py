@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-
+from fastapi.responses import RedirectResponse
 
 
 from app.api.v1 import api
@@ -38,6 +38,13 @@ async def catch_exceptions_middleware(request: Request, call_next):
         return Response("Internal server error", status_code=500)
 
 app.middleware('http')(catch_exceptions_middleware)
+
+
+
+
+@app.get("/")
+async def root():
+    return RedirectResponse('/docs')
 
 
 ############Router#################

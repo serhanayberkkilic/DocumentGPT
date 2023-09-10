@@ -1,23 +1,25 @@
 from typing import Any
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, BackgroundTasks, UploadFile
 from fastapi.responses import JSONResponse
 
+from app.utils.textExtraction.main import textExtraction
 
 
 router = APIRouter()
 
 
-
-@router.get("/")
-
-def read(
+@router.post("/")
+async def Upload(
+    background_tasks: BackgroundTasks,
+    file: UploadFile
 ) -> Any:
-
     try:
+        responseTextExtraction=textExtraction().Text(await file.read())
+        background_tasks.add_task(file.file.close)
 
-        result="Hello World"
-        return result
+        print(responseTextExtraction)
+
+
 
     except Exception as e:
-        return JSONResponse(content={"detail":str(e)},status_code=400)
-
+        return JSONResponse(content={"detail": str(e)}, status_code=400)

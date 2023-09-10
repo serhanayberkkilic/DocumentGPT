@@ -14,7 +14,6 @@ def read(
 ) -> Any:
 
     try:
-
         result="Hello World"
         return result
 
