@@ -41,8 +41,11 @@ class AzureCognitiveServicesSettings(BaseSettings):
     endpoint: str
     key: str
 
-class openaiSettings(BaseSettings):
-    key: str
+class azureOpenaiSettings(BaseSettings):
+    api_type :str
+    api_base : str
+    api_version : str
+    api_key: str
 
 
 settings = Settings(
@@ -74,6 +77,9 @@ azureCognitiveServicesSettings = AzureCognitiveServicesSettings(
 )
 
 
-openaisettings = openaiSettings(
-    key="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"
+openaisettings = azureOpenaiSettings(
+    api_type="azure",
+    api_base="https://peakupai-west.openai.azure.com/",
+    api_version="2022-12-01",
+    api_key="9aa056979e0c45aa807dec25c66796d1"
 )

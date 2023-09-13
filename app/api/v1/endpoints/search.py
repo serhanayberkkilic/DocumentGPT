@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from app.schemas import searchSchemas
 from app.utils.vectorTransformer.main import VectorTransformer
 from app.db.main import Database
-from app.utils.langchain.main import LangChain
+from app.utils.azureOpenAI.main import ChatCompletionClass
 
 router = APIRouter()
 
@@ -22,9 +22,8 @@ def send(
         responseVectorTransformer=VectorTransformer().transform(search.text)
         response=Database().search(indexName="risetech",vector=responseVectorTransformer.tolist(),top_k=1)
         metadata = response["matches"][0]["metadata"]["text_extraction"]
-        resp=LangChain().QuestionAnswer(metadata)
-        print(resp)
-        return JSONResponse(content={"detail":response},status_code=200)
+        resp=ChatCompletionClass().QuestionAnswer(question=search.text,datas=metadata)
+        return JSONResponse(content={"Answer":resp},status_code=200)
 
 
 
