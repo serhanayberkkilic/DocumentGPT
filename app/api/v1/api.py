@@ -17,4 +17,4 @@ async def read():
 
 api_router.include_router(fileUploadRouter, prefix="/fileUpload", tags=["fileUpload"])
 
-api_router.include_router(fileUploadRouter, prefix="/search", tags=["search"])
+api_router.include_router(searchRouter, prefix="/search", tags=["search"])

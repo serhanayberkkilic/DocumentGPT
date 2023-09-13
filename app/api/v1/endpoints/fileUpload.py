@@ -1,9 +1,11 @@
 from typing import Any
 from fastapi import APIRouter, BackgroundTasks, UploadFile
 from fastapi.responses import JSONResponse
+from uuid import uuid4
 
 from app.utils.textExtraction.main import textExtraction
-
+from app.utils.vectorTransformer.main import VectorTransformer
+from app.db.main import Database
 
 router = APIRouter()
 
@@ -17,7 +19,22 @@ async def Upload(
         responseTextExtraction=textExtraction().Text(await file.read())
         background_tasks.add_task(file.file.close)
 
-        print(responseTextExtraction)
+        totalstr=""
+        for i in responseTextExtraction:
+            totalstr+= " "+i[0]
+
+        responseVectorTransformer=VectorTransformer().transform(totalstr)
+        data={
+            "id":str(uuid4()),
+            "values":responseVectorTransformer.tolist(),
+            "metadata":{
+                "filename":file.filename,
+                "content_type":file.content_type,
+                "text_extraction":totalstr,
+            }
+        }
+        Database().insert(indexName="risetech",data=data)
+        return JSONResponse(content={"detail": "success"}, status_code=200)
 
 
 

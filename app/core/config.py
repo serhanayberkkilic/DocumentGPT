@@ -37,11 +37,18 @@ class Settings(BaseSettings):
     contact: contact
     licenseInfo: licenseInfo
 
+class AzureCognitiveServicesSettings(BaseSettings):
+    endpoint: str
+    key: str
+
+class openaiSettings(BaseSettings):
+    key: str
+
 
 settings = Settings(
     serverName="localhost",
-    serverHost="http://localhost:5000",
-    backendCorsOrigins=["http://localhost:5000"],
+    serverHost="http://localhost:8000",
+    backendCorsOrigins=["http://localhost:8000"],
     projectName="Risetechnologies",
     projectDescription="Risetechnologies",
     projectVersion=0.2,
@@ -60,3 +67,13 @@ settings = Settings(
     
 )
 
+
+azureCognitiveServicesSettings = AzureCognitiveServicesSettings(
+    endpoint="https://cognitiveayberk.cognitiveservices.azure.com/",
+    key="611f005d036740cc8504679e062dccf0"
+)
+
+
+openaisettings = openaiSettings(
+    key="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"
+)
