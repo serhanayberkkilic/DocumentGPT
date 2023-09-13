@@ -71,15 +71,7 @@ settings = Settings(
 )
 
 
-azureCognitiveServicesSettings = AzureCognitiveServicesSettings(
-    endpoint="https://cognitiveayberk.cognitiveservices.azure.com/",
-    key="611f005d036740cc8504679e062dccf0"
-)
+azureCognitiveServicesSettings = AzureCognitiveServicesSettings()
 
 
-openaisettings = azureOpenaiSettings(
-    api_type="azure",
-    api_base="https://peakupai-west.openai.azure.com/",
-    api_version="2022-12-01",
-    api_key="9aa056979e0c45aa807dec25c66796d1"
-)
+openaisettings = azureOpenaiSettings()
